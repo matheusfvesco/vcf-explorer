@@ -5,4 +5,5 @@ COPY pyproject.toml .
 RUN apt update \
     && apt install -y gcc \
     && rm -rf /var/lib/apt/lists/* \
-    && uv sync
+    && uv sync \
+    && uv cache clean
