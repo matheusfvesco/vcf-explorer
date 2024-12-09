@@ -1,0 +1,21 @@
+[project]
+name = "api"
+version = "0.1.0"
+description = "Api for annotating and serving a VCF file"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "biopython>=1.84",
+    "cyvcf2>=0.31.1",
+    "fastapi>=0.115.6",
+    "hgvs>=1.5.4",
+    "httpx>=0.28.0",
+    "myvariant>=1.0.0",
+    "pandas>=2.2.3",
+    "polars>=1.16.0",
+    "pytest>=8.3.4",
+    "setuptools>=75.6.0",
+    "snakemake>=8.25.5",
+    "sqlalchemy>=2.0.36",
+    "uvicorn>=0.32.1",
+]
