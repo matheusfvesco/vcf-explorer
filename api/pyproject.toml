@@ -13,6 +13,7 @@ dependencies = [
     "myvariant>=1.0.0",
     "pandas>=2.2.3",
     "polars>=1.16.0",
+    "pyarrow>=18.1.0",
     "pytest>=8.3.4",
     "setuptools>=75.6.0",
     "snakemake>=8.25.5",
