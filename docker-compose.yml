@@ -1,0 +1,52 @@
+version: '3.9'
+
+services:
+  api:
+    build:
+      context: ./api
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3087:3087"
+    depends_on:
+      - postgres
+    networks:
+      - vcf-visualizer
+
+  frontend:
+    build:
+      context: ./frontend
+    environment:
+      API_HOST: api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    networks:
+      - vcf-visualizer
+
+  postgres:
+    image: postgres:15
+    container_name: postgres-db
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - vcf-visualizer
+
+volumes:
+  postgres-data:
+
+networks:
+  vcf-visualizer:
+    driver: bridge
