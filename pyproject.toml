@@ -4,13 +4,12 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = [
-    "cyvcf2>=0.31.1",
-    "fastapi>=0.115.6",
-    "httpx>=0.28.0",
-    "myvariant>=1.0.0",
-    "pydbsnp>=2.0.2",
-    "pytest>=8.3.4",
-    "snakemake>=8.25.5",
-    "uvicorn>=0.32.1",
+dependencies = []
+
+[tool.uv]
+dev-dependencies = [
+    "ipykernel>=6.29.5",
 ]
+
+[tool.uv.workspace]
+members = ["frontend", "api"]
