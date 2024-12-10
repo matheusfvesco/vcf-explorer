@@ -1,11 +1,5 @@
 import sys
 import argparse
-import os
-print(os.getcwd())
-print(os.listdir("."))
-print(os.listdir("./src"))
-print()
-print()
 from annotate import AsyncMyVariantInfo
 import polars as pl
 import asyncio
