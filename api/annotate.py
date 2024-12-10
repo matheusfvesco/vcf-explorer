@@ -53,7 +53,7 @@ def annotate_variant(data: dict):
     male_freq = gnomad_male_freq
     female_freq = gnomad_female_freq
 
-    global_dp = exome_dp or genome_dp or exome_dp
+    global_dp = exome_dp or genome_dp or exac_dp
 
     return (
         data["query"],
