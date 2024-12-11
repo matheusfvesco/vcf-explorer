@@ -66,7 +66,7 @@ def test_filter_correct(param, op, val):
 def test_filter_min_value(param):
     for sample in client.get('/samples').json():
 
-        df = pl.from_dicts(client.get(f'/variants/{sample}').json())
+        df = pl.from_dicts(client.get(f'/variants/{sample}').json()["variants"])
         num_SNPs = len(df.filter(pl.col(param).is_not_null()))
         json_resp = client.get('/meta').json()
         #num_SNPs = json_resp[sample]["num_SNPs"]
@@ -98,7 +98,7 @@ def test_filter_min_value(param):
 def test_filter_max_value(param):
     for sample in client.get('/samples').json():
 
-        df = pl.from_dicts(client.get(f'/variants/{sample}').json())
+        df = pl.from_dicts(client.get(f'/variants/{sample}').json()["variants"])
         num_SNPs = len(df.filter(pl.col(param).is_not_null()))
         json_resp = client.get('/meta').json()
         #num_SNPs = json_resp[sample]["num_SNPs"]
