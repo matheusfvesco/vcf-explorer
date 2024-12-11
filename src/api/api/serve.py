@@ -1,8 +1,16 @@
 from fastapi import FastAPI, HTTPException
 import polars as pl
 from pathlib import Path
+import argparse
 
-df_path = Path("data/NIST.tsv")
+parser = argparse.ArgumentParser()
+parser.add_argument("sample", type=str)
+parser.add_argument("--port", type=str)
+args = parser.parse_args()
+
+# first tsv file found
+#df_path = sorted(Path("data").rglob("*.tsv"))[0]
+df_path = Path(args.sample)
 variants_df = pl.read_csv(df_path, separator="\t")
 variants_df = variants_df.sort("freq",nulls_last=True)
 
@@ -108,3 +116,6 @@ def filter_variants(parameter: str, operator: str, value: float):
 
     return filtered_variants.to_dicts()
 
+if __name__ == '__main__':
+    import uvicorn
+    uvicorn.run(app, host='0.0.0.0', port=int(args.port))

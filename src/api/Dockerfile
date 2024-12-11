@@ -17,7 +17,7 @@ COPY src/api/annotate .
 
 COPY src/api/run.sh .
 
-COPY data/NIST.vcf.gz /data/NIST.vcf.gz
+COPY data /data
 
 
 RUN chmod +x run.sh
