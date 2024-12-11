@@ -15,7 +15,6 @@ def check_api_status():
         except requests.exceptions.RequestException:
             time.sleep(2)  # Wait for 2 seconds before retrying
 
-
 # Function to fetch data from API
 def fetch_data(endpoint, params=None):
     try:
@@ -26,7 +25,6 @@ def fetch_data(endpoint, params=None):
         st.error(f"An error occurred: {e}")
         return None
 
-
 # Map original column names to user-friendly names
 COLUMN_MAPPING = {
     "freq": "Global Frequency",
@@ -36,7 +34,6 @@ COLUMN_MAPPING = {
 }
 
 OP_MAPPING = {"gt": "Greater than", "eq": "Equal to", "lt": "Less than"}
-
 
 # Main Streamlit app
 def main():
@@ -53,19 +50,34 @@ def main():
     # Sidebar setup
     st.sidebar.title("Filter Options")
 
-    # Fetch metadata
+    # Fetch available samples from the API
+    samples = fetch_data("/samples")
+    if not samples:
+        return
+
+    # Sidebar dropdown for selecting a sample
+    selected_sample = st.sidebar.selectbox("Select sample", samples)
+
+    # If sample changes, reset the filtered data
+    if "selected_sample" in st.session_state and st.session_state["selected_sample"] != selected_sample:
+        st.session_state["filtered"] = None  # Clear filtered data when sample changes
+
+    st.session_state["selected_sample"] = selected_sample  # Store the selected sample
+
+    # Fetch metadata for the selected sample
     meta = fetch_data("/meta")
     if not meta:
         return
+
+    # Update page title with the selected sample
+    st.title(f"Variants Explorer - {selected_sample}")
 
     # Sidebar filters
     parameter = st.sidebar.radio(
         "Select column to filter by:",
         ["freq", "male_freq", "female_freq", "dp"],
         index=0,
-        format_func=lambda x: COLUMN_MAPPING.get(
-            x, x
-        ),
+        format_func=lambda x: COLUMN_MAPPING.get(x, x),
     )
     operator = st.sidebar.radio(
         "Select operation:",
@@ -75,23 +87,16 @@ def main():
     )
 
     # Extract min and max values from metadata
-    min_value = float(meta[parameter][0])
-    max_value = float(meta[parameter][1])
+    min_value = float(meta[selected_sample][parameter][0])
+    max_value = float(meta[selected_sample][parameter][1])
 
     # Add a text input for manual entry
     manual_value = st.sidebar.text_input(
         "Manually enter value:", value=f"{min_value:.10f}"
     )
-    try:
-        manual_value_float = float(manual_value)
-        # Ensure manual value is within the expected range
-        if min_value <= manual_value_float <= max_value:
-            value = manual_value_float
-        else:
-            st.sidebar.error(f"Value must be between {min_value} and {max_value}.")
-            value = min_value
-    except ValueError:
-        value = min_value
+
+    manual_value_float = float(manual_value)
+    value = manual_value_float
 
     page = st.sidebar.number_input("Page number:", min_value=1, value=1, step=1)
     page_size = st.sidebar.number_input("Page size:", min_value=1, value=10, step=1)
@@ -99,23 +104,27 @@ def main():
     # Apply Filter button
     if st.sidebar.button("Apply Filter"):
         st.session_state["filtered"] = fetch_data(
-            f"/filter/{parameter}/{operator}/{value}",
+            f"/filter/{selected_sample}/{parameter}/{operator}/{value}",
         )
 
     # Metadata display
     st.sidebar.markdown("---")
     st.sidebar.header("Metadata (min, max)")
-    st.sidebar.json(meta, expanded=False)
+    st.sidebar.json(meta[selected_sample], expanded=False)
 
-    if "filtered" not in st.session_state:
-        all_data = fetch_data("/variants")
+    # Fetch filtered data if not already in session state
+    if "filtered" not in st.session_state or st.session_state["filtered"] is None:
+        all_data = fetch_data(f"/variants/{selected_sample}")
         if all_data:
             st.session_state["filtered"] = all_data
+        else:
+            st.write("No variants data available for this sample.")
 
     filtered_data = st.session_state.get("filtered", [])
 
     st.header("Variants")
     if filtered_data:
+        filtered_data = filtered_data["variants"]
         total_records = len(filtered_data)
         start_idx = (page - 1) * page_size
         end_idx = start_idx + page_size
@@ -144,7 +153,6 @@ def main():
             st.write("No data available for the selected page.")
     else:
         st.write("No data to display. Please apply a filter.")
-
 
 if __name__ == "__main__":
     main()
