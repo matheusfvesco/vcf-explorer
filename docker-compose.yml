@@ -1,0 +1,30 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: src/api/Dockerfile
+    container_name: api_service
+    ports:
+      - "4000:4000"
+    networks:
+      - variant_explorer
+    volumes:
+      - ./data:/data  # Maps the host's ./data directory to /data in the container
+
+  frontend:
+    build:
+      context: .
+      dockerfile: src/frontend/Dockerfile
+    container_name: frontend_service
+    ports:
+      - "8501:8501"
+    depends_on:
+      - api
+    networks:
+      - variant_explorer
+    environment:
+      - API_BASE_URL=http://api_service:4000
+
+networks:
+  variant_explorer:
+    driver: bridge
