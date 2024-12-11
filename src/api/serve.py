@@ -86,7 +86,7 @@ def read_root():
         200: {"description": "Successful response with dataframe as a list of dicts"},
     },
 )
-def get_variants():
+def meta():
     return {
         "num_SNPs": len(variants_df),
         "dp": [variants_df["dp"].min(), variants_df["dp"].max()],
