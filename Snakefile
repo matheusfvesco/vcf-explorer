@@ -8,4 +8,4 @@ rule annotate:
     output:
         "{sample}.tsv"
     shell:
-        "src/annotate.py {input} {output}"
+        "uv run src/annotate.py {input} {output}"
