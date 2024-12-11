@@ -31,6 +31,16 @@ docker compose up -d
 
 See usage section for more details
 
+
+
+## Usage
+
+The web interface will be accessible at [http://localhost:8501/](http://localhost:8501/). After running the container for the first time, the file will be processed. This will take some time. The web interface will update when the file is finishes the processing step.
+
+After the file is processed, you may access the api at [http://localhost:4000](http://localhost:4000). Use [http://localhost:4000/docs](http://localhost:4000/docs) to further explore how to use the API.
+
+## Development
+
 ### Local install for development
 
 #### 1. Clone the repository
@@ -73,9 +83,3 @@ To run tests, use pytest. Use the following command:
 ```bash
 uv run --package api pytest
 ```
-
-## Usage
-
-The web interface will be accessible at [http://localhost:8501/](http://localhost:8501/). After running the container for the first time, the file will be processed. This will take some time. The web interface will update when the file is finishes the processing step.
-
-After the file is processed, you may access the api at [http://localhost:4000](http://localhost:4000). Use [http://localhost:4000/docs](http://localhost:4000/docs) to further explore how to use the API.
