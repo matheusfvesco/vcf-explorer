@@ -211,7 +211,7 @@ requires-dist = [
     { name = "myvariant", specifier = ">=1.0.0" },
     { name = "polars", specifier = ">=1.17.1" },
     { name = "pytest", specifier = ">=8.3.4" },
-    { name = "snakemake", specifier = ">=8.25.5" },
+    { name = "snakemake", specifier = "<8.19" },
     { name = "uvicorn", specifier = ">=0.32.1" },
 ]
 
@@ -563,8 +563,6 @@ version = "6.1.0"
 source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/26/10/2a30b13c61e7cf937f4adf90710776b7918ed0a9c434e2c38224732af310/psutil-6.1.0.tar.gz", hash = "sha256:353815f59a7f64cdaca1c0307ee13558a0512f6db064e92fe833784f08539c7a", size = 508565 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/da/2b/f4dea5d993d9cd22ad958eea828a41d5d225556123d372f02547c29c4f97/psutil-6.1.0-cp27-none-win32.whl", hash = "sha256:9118f27452b70bb1d9ab3198c1f626c2499384935aaf55388211ad982611407e", size = 246648 },
-    { url = "https://files.pythonhosted.org/packages/9f/14/4aa97a7f2e0ac33a050d990ab31686d651ae4ef8c86661fef067f00437b9/psutil-6.1.0-cp27-none-win_amd64.whl", hash = "sha256:a8506f6119cff7015678e2bce904a4da21025cc70ad283a53b099e7620061d85", size = 249905 },
     { url = "https://files.pythonhosted.org/packages/01/9e/8be43078a171381953cfee33c07c0d628594b5dbfc5157847b85022c2c1b/psutil-6.1.0-cp36-abi3-macosx_10_9_x86_64.whl", hash = "sha256:6e2dcd475ce8b80522e51d923d10c7871e45f20918e027ab682f94f1c6351688", size = 247762 },
     { url = "https://files.pythonhosted.org/packages/1d/cb/313e80644ea407f04f6602a9e23096540d9dc1878755f3952ea8d3d104be/psutil-6.1.0-cp36-abi3-macosx_11_0_arm64.whl", hash = "sha256:0895b8414afafc526712c498bd9de2b063deaac4021a3b3c34566283464aff8e", size = 248777 },
     { url = "https://files.pythonhosted.org/packages/65/8e/bcbe2025c587b5d703369b6a75b65d41d1367553da6e3f788aff91eaf5bd/psutil-6.1.0-cp36-abi3-manylinux_2_12_i686.manylinux2010_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:9dcbfce5d89f1d1f2546a2090f4fcf87c7f669d1d90aacb7d7582addece9fb38", size = 284259 },
@@ -576,11 +574,11 @@ wheels = [
 
 [[package]]
 name = "pulp"
-version = "2.9.0"
+version = "2.8.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/bb/d5/7cb148b56f3603be3663498db3a63054d7d519eab32ef9c39f93faf6b7a9/pulp-2.9.0.tar.gz", hash = "sha256:2e30e6c0ef2c0edac185220e3e53faca62eb786a9bd68465208f05bc63e850f3", size = 17610175 }
+sdist = { url = "https://files.pythonhosted.org/packages/2c/e0/683a36567b0a396961192dc9ec477ba1f88be56d968ca26688bd6e02f23b/PuLP-2.8.0.tar.gz", hash = "sha256:4903bf96110bbab8ed2c68533f90565ebb76aa367d9e4df38e51bf727927c125", size = 17610412 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/64/10/704c18b5960b3f9b10efcc859e11881ad90f1e44008e181d2b10cd305a63/PuLP-2.9.0-py3-none-any.whl", hash = "sha256:ad6a9b566d8458f4d05f4bfe2cea59e32885dd1da6929a361be579222107987c", size = 17678417 },
+    { url = "https://files.pythonhosted.org/packages/09/d7/57e71e11108203039c895643368c0d1a99fe719a6a80184edf240c33d25f/PuLP-2.8.0-py3-none-any.whl", hash = "sha256:4a19814a5b0a4392d788ac2315263435293579b0583c3469943fe0c6a586f263", size = 17678623 },
 ]
 
 [[package]]
@@ -806,7 +804,7 @@ wheels = [
 
 [[package]]
 name = "snakemake"
-version = "8.25.5"
+version = "8.18.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "appdirs" },
@@ -833,14 +831,16 @@ dependencies = [
     { name = "snakemake-interface-executor-plugins" },
     { name = "snakemake-interface-report-plugins" },
     { name = "snakemake-interface-storage-plugins" },
+    { name = "stopit" },
     { name = "tabulate" },
     { name = "throttler" },
+    { name = "toposort" },
     { name = "wrapt" },
     { name = "yte" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f8/c0/3d480f1bb41212076dc329e4a602f28389738b161eed6361baefbfcd05f8/snakemake-8.25.5.tar.gz", hash = "sha256:62a2009a28b6738aa189e3c04b9366713f2efe8085b6facb2b4655643549fd51", size = 4731301 }
+sdist = { url = "https://files.pythonhosted.org/packages/4c/1f/291bd860478ca878908d5c7d932ff71eec799b3ee5efdc0c14b6159608e3/snakemake-8.18.2.tar.gz", hash = "sha256:7dc8cdc3c836444c2bc3d67a4a7f4d703557c1bf96a90da18f312f4df9daefc4", size = 302915 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/0c/4e/9d364ad564e668517cae9ecfad2ba2b95fe49cd792d525b7c652a2e80d08/snakemake-8.25.5-py3-none-any.whl", hash = "sha256:83387857cc8a33aa844fe90ac0ec10ef38a4d123348679c198d31f4ddc4b16bb", size = 1002687 },
+    { url = "https://files.pythonhosted.org/packages/d2/db/8603474aa822109d62fb00883126849420b2e532a604837b699ec02e80ae/snakemake-8.18.2-py3-none-any.whl", hash = "sha256:9b07927648b7091df2f2adbd9e41517abae5e3a6cea7bb428e5d5bec2ed68750", size = 308425 },
 ]
 
 [[package]]
@@ -919,6 +919,12 @@ wheels = [
 ]
 
 [[package]]
+name = "stopit"
+version = "1.1.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/35/58/e8bb0b0fb05baf07bbac1450c447d753da65f9701f551dca79823ce15d50/stopit-1.1.2.tar.gz", hash = "sha256:f7f39c583fd92027bd9d06127b259aee7a5b7945c1f1fa56263811e1e766996d", size = 18281 }
+
+[[package]]
 name = "tabulate"
 version = "0.9.0"
 source = { registry = "https://pypi.org/simple" }
@@ -934,6 +940,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/b4/22/638451122136d5280bc477c8075ea448b9ebdfbd319f0f120edaecea2038/throttler-1.2.2.tar.gz", hash = "sha256:d54db406d98e1b54d18a9ba2b31ab9f093ac64a0a59d730c1cf7bb1cdfc94a58", size = 7970 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/df/d4/36bf6010b184286000b2334622bfb3446a40c22c1d2a9776bff025cb0fe5/throttler-1.2.2-py3-none-any.whl", hash = "sha256:fc6ae612a2529e01110b32335af40375258b98e3b81232ec77cd07f51bf71392", size = 7609 },
+]
+
+[[package]]
+name = "toposort"
+version = "1.10"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/69/19/8e955d90985ecbd3b9adb2a759753a6840da2dff3c569d412b2c9217678b/toposort-1.10.tar.gz", hash = "sha256:bfbb479c53d0a696ea7402601f4e693c97b0367837c8898bc6471adfca37a6bd", size = 11132 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f6/17/57b444fd314d5e1593350b9a31d000e7411ba8e17ce12dc7ad54ca76b810/toposort-1.10-py3-none-any.whl", hash = "sha256:cbdbc0d0bee4d2695ab2ceec97fe0679e9c10eab4b2a87a9372b929e70563a87", size = 8500 },
 ]
 
 [[package]]

@@ -10,6 +10,6 @@ dependencies = [
     "myvariant>=1.0.0",
     "polars>=1.17.1",
     "pytest>=8.3.4",
-    "snakemake>=8.25.5",
+    "snakemake<8.19",
     "uvicorn>=0.32.1",
 ]
