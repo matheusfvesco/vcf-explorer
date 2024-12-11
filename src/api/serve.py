@@ -79,8 +79,8 @@ def read_root():
 
 @app.get(
     "/meta",
-    summary="Retrieves the entire dataset", 
-    description="Retrieves the entire dataset",
+    summary="Retrieves meta from the entire dataset", 
+    description="Retrieves meta from the entire dataset",
     tags=["items"],
     responses={
         200: {"description": "Successful response with dataframe as a list of dicts"},
