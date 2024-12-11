@@ -26,8 +26,10 @@ class AsyncMyVariantInfo:
         logger = logging.getLogger("annotate")
         # Divide the ids into chunks
         chunks = [ids[i : i + chunk_size] for i in range(0, len(ids), chunk_size)]
-        logger.debug(f"Divided {len(ids)} SNPs into {len(chunks)} chunks of size {chunk_size}.")
-        
+        logger.debug(
+            f"Divided {len(ids)} SNPs into {len(chunks)} chunks of size {chunk_size}."
+        )
+
         # Asynchronously fetch data for each chunk
         tasks = [
             loop.run_in_executor(

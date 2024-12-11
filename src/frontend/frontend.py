@@ -6,6 +6,7 @@ import polars as pl
 
 API_BASE_URL = os.getenv("API_BASE_URL")
 
+
 # Function to check API availability
 def check_api_status():
     while True:
@@ -15,6 +16,7 @@ def check_api_status():
             return True
         except requests.exceptions.RequestException:
             time.sleep(2)  # Wait for 2 seconds before retrying
+
 
 # Function to fetch data from API
 def fetch_data(endpoint, params=None):
@@ -26,6 +28,7 @@ def fetch_data(endpoint, params=None):
         st.error(f"An error occurred: {e}")
         return None
 
+
 # Map original column names to user-friendly names
 COLUMN_MAPPING = {
     "freq": "Global Frequency",
@@ -35,6 +38,7 @@ COLUMN_MAPPING = {
 }
 
 OP_MAPPING = {"gt": "Greater than", "eq": "Equal to", "lt": "Less than"}
+
 
 # Main Streamlit app
 def main():
@@ -60,7 +64,10 @@ def main():
     selected_sample = st.sidebar.selectbox("Select sample", samples)
 
     # If sample changes, reset the filtered data
-    if "selected_sample" in st.session_state and st.session_state["selected_sample"] != selected_sample:
+    if (
+        "selected_sample" in st.session_state
+        and st.session_state["selected_sample"] != selected_sample
+    ):
         st.session_state["filtered"] = None  # Clear filtered data when sample changes
 
     st.session_state["selected_sample"] = selected_sample  # Store the selected sample
@@ -89,7 +96,6 @@ def main():
 
     # Extract min and max values from metadata
     min_value = float(meta[selected_sample][parameter][0])
-    max_value = float(meta[selected_sample][parameter][1])
 
     # Add a text input for manual entry
     manual_value = st.sidebar.text_input(
@@ -135,9 +141,14 @@ def main():
         if paginated_data:
             paginated_data = pl.from_dicts(paginated_data)
             paginated_data = paginated_data.with_columns(
-                (pl.lit("https://www.ncbi.nlm.nih.gov/snp/") + paginated_data["rsid"].cast(str)).alias("url")
+                (
+                    pl.lit("https://www.ncbi.nlm.nih.gov/snp/")
+                    + paginated_data["rsid"].cast(str)
+                ).alias("url")
             )
-            paginated_data = paginated_data.select(["hgvs", "rsid", "url", "freq", "male_freq", "female_freq", "dp"])
+            paginated_data = paginated_data.select(
+                ["hgvs", "rsid", "url", "freq", "male_freq", "female_freq", "dp"]
+            )
             st.dataframe(
                 paginated_data,
                 use_container_width=True,
@@ -153,9 +164,7 @@ def main():
                     "female_freq": st.column_config.NumberColumn(
                         format="%.10f", disabled=True
                     ),
-                    "url": st.column_config.LinkColumn(
-                        disabled=True
-                    ),
+                    "url": st.column_config.LinkColumn(disabled=True),
                 },
             )  # Makes the dataframe take up more space
             st.write(f"Showing records {start_idx + 1} to {end_idx} of {total_records}")
@@ -164,6 +173,7 @@ def main():
             st.write("No data available for the selected page.")
     else:
         st.write("No data to display. Please apply a filter.")
+
 
 if __name__ == "__main__":
     main()

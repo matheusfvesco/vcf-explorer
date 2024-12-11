@@ -7,16 +7,17 @@ import logging
 from pathlib import Path
 import time
 
+
 def handle_exception(exc_type, exc_value, exc_traceback):
     if issubclass(exc_type, KeyboardInterrupt):
         sys.__excepthook__(exc_type, exc_value, exc_traceback)
         return
 
-    logger.error(
-        "Uncaught exception", exc_info=(exc_type, exc_value, exc_traceback)
-    )
+    logger.error("Uncaught exception", exc_info=(exc_type, exc_value, exc_traceback))
+
 
 sys.excepthook = handle_exception
+
 
 def annotate_variant(data: dict):
     global_freq = None
@@ -144,7 +145,6 @@ async def main(input_path, output_path, logger):
 
 
 if __name__ == "__main__":
-
     parser = argparse.ArgumentParser()
     parser.add_argument("input_file")
     parser.add_argument("output_file")
@@ -156,7 +156,9 @@ if __name__ == "__main__":
     # Setup logging
     # setup third party logs
     logging.basicConfig(level=logging.NOTSET)
-    logging.getLogger("biothings.client").setLevel(logging.WARNING)  # Suppress info/debug logs
+    logging.getLogger("biothings.client").setLevel(
+        logging.WARNING
+    )  # Suppress info/debug logs
     logging.getLogger("urllib3").setLevel(logging.WARNING)  # Suppress info/debug logs
     logger = logging.getLogger("annotate")
     logger.setLevel(logging.NOTSET)  # Allow all messages to pass to handlers
