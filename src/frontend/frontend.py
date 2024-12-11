@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 import os
 import time
+import polars as pl
 
 API_BASE_URL = os.getenv("API_BASE_URL")
 
@@ -125,12 +126,18 @@ def main():
     st.header("Variants")
     if filtered_data:
         filtered_data = filtered_data["variants"]
+
         total_records = len(filtered_data)
         start_idx = (page - 1) * page_size
         end_idx = start_idx + page_size
         paginated_data = filtered_data[start_idx:end_idx]
 
         if paginated_data:
+            paginated_data = pl.from_dicts(paginated_data)
+            paginated_data = paginated_data.with_columns(
+                (pl.lit("https://www.ncbi.nlm.nih.gov/snp/") + paginated_data["rsid"].cast(str)).alias("url")
+            )
+            paginated_data = paginated_data.select(["hgvs", "rsid", "url", "freq", "male_freq", "female_freq", "dp"])
             st.dataframe(
                 paginated_data,
                 use_container_width=True,
@@ -146,9 +153,13 @@ def main():
                     "female_freq": st.column_config.NumberColumn(
                         format="%.10f", disabled=True
                     ),
+                    "url": st.column_config.LinkColumn(
+                        disabled=True
+                    ),
                 },
             )  # Makes the dataframe take up more space
             st.write(f"Showing records {start_idx + 1} to {end_idx} of {total_records}")
+
         else:
             st.write("No data available for the selected page.")
     else:
