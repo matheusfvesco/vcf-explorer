@@ -1,6 +1,6 @@
 import sys
 import argparse
-from annotate import AsyncMyVariantInfo
+from async_myvariant import AsyncMyVariantInfo
 import polars as pl
 import asyncio
 import logging

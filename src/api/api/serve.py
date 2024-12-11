@@ -1,14 +1,8 @@
 from fastapi import FastAPI, HTTPException
 import polars as pl
-import math
 from pathlib import Path
-import argparse
 
-parser = argparse.ArgumentParser()
-parser.add_argument("input", type=str, help="Input file path")
-args = parser.parse_args()
-df_path = Path(args.input)
-
+df_path = Path("data/NIST.tsv")
 variants_df = pl.read_csv(df_path, separator="\t")
 variants_df = variants_df.sort("freq",nulls_last=True)
 
@@ -36,30 +30,6 @@ app = FastAPI(
     summary=f"API for the {df_path.stem} sample",
     version="0.0.1",
 )
-
-def paginate(df: pl.DataFrame, page_size: int, page: int) -> dict[str, pl.DataFrame]:
-    if page <= 0:
-        return {"error_code": 404, "error_message": "Page must be greater than 0 (1-indexed)" }
-    if page_size <= 0:
-        return {"error_code": 404, "error_message": "Page size must be greater than 0" }
-    
-    total_items = len(df)
-    num_pages = math.ceil(total_items / page_size)
-    
-    if page > num_pages:
-        raise ValueError(f"Page {page} exceeds the total number of pages ({num_pages})")
-    
-    start = (page - 1) * page_size
-    end = min(start + page_size, total_items)  # Ensure we don't exceed the total items
-    
-    filtered = df[start:end]
-    return {
-        "length": total_items,
-        "pages": num_pages,
-        "page_size": page_size,
-        "page": page,
-        "df": filtered,
-    }
 
 @app.get(
     "/",
@@ -138,8 +108,3 @@ def filter_variants(parameter: str, operator: str, value: float):
 
     return filtered_variants.to_dicts()
 
-
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=4000)

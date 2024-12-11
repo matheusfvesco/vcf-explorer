@@ -1,12 +1,8 @@
 FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim
 
-COPY pyproject.toml .
+COPY src/api/pyproject.toml .
 COPY .python-version .
 COPY uv.lock .
-
-COPY Snakefile .
-
-COPY src .
 
 RUN apt update \
     && apt install -y gcc \
@@ -14,4 +10,16 @@ RUN apt update \
     && uv sync \
     && uv clean
 
-CMD ["uv", "run", "snakemake"]
+COPY src/api/Snakefile .
+
+COPY src/api/api .
+COPY src/api/annotate .
+
+COPY src/api/run.sh .
+
+COPY data/NIST.vcf.gz /data/NIST.vcf.gz
+
+
+RUN chmod +x run.sh
+
+CMD ["./run.sh"]
