@@ -104,7 +104,7 @@ async def main(input_path, output_path, logger):
 
     start_time = time.perf_counter()  # Record the start time
     response = await client.getvariants(
-        ids=hgvs_notations, fields=fields, chunk_size=500
+        ids=hgvs_notations, fields=fields, chunk_size=1000
     )
     end_time = time.perf_counter()  # Record the end time
     elapsed_time = end_time - start_time
