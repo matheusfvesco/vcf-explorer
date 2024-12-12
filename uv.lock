@@ -373,11 +373,15 @@ name = "frontend"
 version = "0.1.0"
 source = { virtual = "src/frontend" }
 dependencies = [
+    { name = "polars" },
     { name = "streamlit" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "streamlit", specifier = ">=1.41.0" }]
+requires-dist = [
+    { name = "polars", specifier = ">=1.17.1" },
+    { name = "streamlit", specifier = ">=1.41.0" },
+]
 
 [[package]]
 name = "gitdb"
