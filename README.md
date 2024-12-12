@@ -6,8 +6,8 @@
 ![Description of GIF](assets/dasa-vcf.gif)
 
 Code for the dasa Variant Call Format (VCF) challenge. It includes code for:
- - Annotating a VCF file;
- - Serving the annotated file via a rest API;
+ - Annotating VCF files using a Snakemake pipeline;
+ - Serving the annotated files via a rest API;
  - Frontend display for the API.
 
 The code is structured using a microservice architecture, with one container for data processing and API, and another one for the frontend.
@@ -15,6 +15,19 @@ The code is structured using a microservice architecture, with one container for
 ## Installation
 
 ### Docker (Recommended)
+
+#### 0. Data folder
+
+Ensure your data folder contains data, in the following structure:
+```
+.
+└── data
+    ├── example.vcf.gz
+    ├── sample1.vcf.gz
+    ├── sample2.vcf.gz
+    ├── sample3.vcf.gz
+    └── etc...
+```
 
 #### 1. Clone the repository
 
