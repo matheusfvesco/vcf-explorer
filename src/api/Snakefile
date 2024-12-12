@@ -1,0 +1,22 @@
+from pathlib import Path
+
+DATA_ROOT = Path("data")
+
+samples = [
+    (DATA_ROOT / str(file.name).replace(".vcf.gz", ""))
+    for file in DATA_ROOT.rglob("*.vcf.gz")
+]
+
+
+rule all:
+    input:
+        expand("{sample}.tsv", sample=samples)
+
+rule annotate:
+    input:
+        "{sample}.vcf.gz"
+    output:
+        "{sample}.tsv"
+    shell:
+        "uv run annotate.py {input} {output}"
+

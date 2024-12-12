@@ -1,0 +1,19 @@
+[project]
+name = "api"
+version = "0.1.0"
+description = "Api module"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "cyvcf2>=0.31.1",
+    "fastapi[standard]>=0.115.6",
+    "myvariant>=1.0.0",
+    "polars>=1.17.1",
+    "snakemake<8.19",
+    "uvicorn>=0.32.1",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.4",
+]

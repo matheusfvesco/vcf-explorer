@@ -9,5 +9,9 @@ wheels/
 # Virtual environments
 .venv
 
-/data
+/data/*
+!/data/example.vcf.gz
 
+*.log
+*.tsv
+/.snakemake
