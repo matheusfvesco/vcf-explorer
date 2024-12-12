@@ -7,7 +7,6 @@ import polars as pl
 API_BASE_URL = os.getenv("API_BASE_URL")
 
 
-# Function to check API availability
 def check_api_status():
     while True:
         try:
@@ -18,7 +17,6 @@ def check_api_status():
             time.sleep(2)  # Wait for 2 seconds before retrying
 
 
-# Function to fetch data from API
 def fetch_data(endpoint, params=None):
     try:
         response = requests.get(f"{API_BASE_URL}{endpoint}", params=params)
@@ -29,7 +27,7 @@ def fetch_data(endpoint, params=None):
         return None
 
 
-# Map original column names to user-friendly names
+# User friendly names
 COLUMN_MAPPING = {
     "freq": "Global Frequency",
     "male_freq": "Male Frequency",
@@ -40,19 +38,16 @@ COLUMN_MAPPING = {
 OP_MAPPING = {"gt": "Greater than", "eq": "Equal to", "lt": "Less than"}
 
 
-# Main Streamlit app
 def main():
     st.set_page_config(
         layout="wide",
         page_icon=":dna:",
     )
 
-    st.title("Variants Explorer")
-
     with st.spinner("Waiting for files to be processed..."):
         check_api_status()
 
-    # Sidebar setup
+    # Sidebar
     st.sidebar.title("Filter Options")
 
     # Fetch available samples from the API
@@ -72,12 +67,6 @@ def main():
 
     st.session_state["selected_sample"] = selected_sample  # Store the selected sample
 
-    # Fetch metadata for the selected sample
-    meta = fetch_data("/meta")
-    if not meta:
-        return
-
-    # Update page title with the selected sample
     st.title(f"Variants Explorer - {selected_sample}")
 
     # Sidebar filters
@@ -94,10 +83,13 @@ def main():
         format_func=lambda x: OP_MAPPING.get(x, x),
     )
 
-    # Extract min and max values from metadata
+    # Fetch metadata for the selected sample
+    meta = fetch_data("/meta")
+    if not meta:
+        return
+
     min_value = float(meta[selected_sample][parameter][0])
 
-    # Add a text input for manual entry
     manual_value = st.sidebar.text_input(
         "Manually enter value:", value=f"{min_value:.10f}"
     )
@@ -108,13 +100,12 @@ def main():
     page = st.sidebar.number_input("Page number:", min_value=1, value=1, step=1)
     page_size = st.sidebar.number_input("Page size:", min_value=1, value=10, step=1)
 
-    # Apply Filter button
+    # Fetch data from filter endpoint
     if st.sidebar.button("Apply Filter"):
         st.session_state["filtered"] = fetch_data(
             f"/filter/{selected_sample}/{parameter}/{operator}/{value}",
         )
 
-    # Metadata display
     st.sidebar.markdown("---")
     st.sidebar.header("Metadata (min, max)")
     st.sidebar.json(meta[selected_sample], expanded=False)
@@ -166,7 +157,7 @@ def main():
                     ),
                     "url": st.column_config.LinkColumn(disabled=True),
                 },
-            )  # Makes the dataframe take up more space
+            )
             st.write(f"Showing records {start_idx + 1} to {end_idx} of {total_records}")
 
         else:
