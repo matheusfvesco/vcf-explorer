@@ -35,9 +35,9 @@ Ensure your data folder contains data, in the following structure:
 git clone https://github.com/matheusfvesco/dasa-vcf-challenge.git
 ```
 
-#### 2. Build the image
+#### 2. Build and run the image
 
-Use the following command to build the image:
+Use the following command to build and run the image:
 ```bash
 docker compose up -d
 ```
