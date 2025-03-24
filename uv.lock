@@ -4,7 +4,7 @@ requires-python = ">=3.12"
 [manifest]
 members = [
     "api",
-    "dasa-challenge",
+    "vcf-explorer",
     "frontend",
 ]
 
@@ -263,7 +263,7 @@ wheels = [
 ]
 
 [[package]]
-name = "dasa-challenge"
+name = "vcf-explorer"
 version = "0.1.0"
 source = { virtual = "." }
 
