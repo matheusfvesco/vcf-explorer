@@ -1,11 +1,11 @@
-# Dasa Variant Call Explorer Challenge
+# Variant Call Explorer
 
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
-![Description of GIF](assets/dasa-vcf.gif)
+![Description of GIF](assets/vcf-explorer.gif)
 
-Code for the dasa Variant Call Format (VCF) challenge. It includes code for:
+Code for Variant Call Format (VCF) Explorer. It includes code for:
  - Annotating VCF files using a Snakemake pipeline;
  - Serving the annotated files via a rest API;
  - Frontend display for the API.
@@ -32,7 +32,7 @@ Ensure your data folder contains data, in the following structure:
 #### 1. Clone the repository
 
 ```bash
-git clone https://github.com/matheusfvesco/dasa-vcf-challenge.git
+git clone https://github.com/matheusfvesco/vcf-explorer.git
 ```
 
 #### 2. Build and run the image
@@ -59,7 +59,7 @@ After the file is processed, you may access the api at [http://localhost:4000](h
 #### 1. Clone the repository
 
 ```bash
-git clone https://github.com/matheusfvesco/dasa-vcf-challenge.git
+git clone https://github.com/matheusfvesco/vcf-explorer.git
 ```
 
 #### 2. Install dependencies
